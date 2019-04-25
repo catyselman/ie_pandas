@@ -3,7 +3,7 @@
 
 import pytest
 import numpy as np
-from ie_pandas.ie_pandas import DataFrame
+from ie_pandas import DataFrame
 
 npDict1 = { '1': np.array([1,2]), '2': np.array([2,3])}
 npDict2 = { '1': np.array([1,2,3,4]), '2': np.array([2,3,4,5]), '3': np.array(['ff','dfdfa','dfdfb','cdfd'])}
