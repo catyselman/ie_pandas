@@ -142,10 +142,64 @@ def test_max(dictionary, expected):
 @pytest.mark.parametrize("dictionary, expected", [
     (npDict1, [1, 2]),
     (npDict2, [1, 2]),
-	(listDict1, [1, 2]),
-   	(listDict2, [1, 2]),
+    (listDict1, [1, 2]),
+    (listDict2, [1, 2]),
 ])
 
 def test_min(dictionary, expected):
     myDF = DataFrame(dictionary)
     assert myDF.min() == expected
+
+@pytest.mark.parametrize("dictionary, expected", [
+    (npDict1, [1.5, 2.5]),
+    (npDict2, [2.5, 3.5]),
+    (listDict1, [1.5, 2.5]),
+    (listDict2, [2.5, 3.5]),
+])
+
+def test_mean(dictionary, expected):
+    myDF = DataFrame(dictionary)
+    assert myDF.mean() == expected
+
+@pytest.mark.parametrize("dictionary, expected", [
+    (npDict1, [0.25, 0.25]),
+    (npDict2, [1.25, 1.25]),
+    (listDict1, [0.25, 0.25]),
+    (listDict2, [1.25, 1.25]),
+])
+
+def test_var(dictionary, expected):
+    myDF = DataFrame(dictionary)
+    assert myDF.var() == expected
+
+@pytest.mark.parametrize("dictionary, expected", [
+    (npDict1, [0.5, 0.5]),
+    (listDict1, [0.5, 0.5]),
+])
+
+def test_std(dictionary, expected):
+    myDF = DataFrame(dictionary)
+    assert myDF.std() == expected
+
+@pytest.mark.parametrize("dictionary, expected", [
+    (npDict1, [0, 0]),
+    (npDict2, [0, 0]),
+    (listDict1, [0, 0]),
+    (listDict2, [0, 0]),
+])
+def test_argmin(dictionary, expected):
+    myDF = DataFrame(dictionary)
+    assert myDF.argmin() == expected
+
+@pytest.mark.parametrize("dictionary, expected", [
+    (npDict1, [1, 1]),
+    (npDict2, [3, 3]),
+    (listDict1, [1, 1]),
+    (listDict2, [3, 3]),
+])
+def test_argmax(dictionary, expected):
+    myDF = DataFrame(dictionary)
+    assert myDF.argmax() == expected
+
+
+

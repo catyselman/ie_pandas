@@ -100,3 +100,21 @@ class DataFrame:
 
     def mean(self):
         return self.aggFunction(np.mean)
+
+    def var(self):
+        return self.aggFunction(np.var)
+
+    def std(self):
+        return self.aggFunction(np.std)
+    
+#Find Index of minimum value
+    def argmin(self):
+        return self.aggFunction(np.argmin)
+
+#Find Index of maximum value
+    def argmax(self):
+        return self.aggFunction(np.argmax)
+
+
+
+
