@@ -22,7 +22,7 @@ class DataFrame:
                 raise TypeError('All values of dictionary must be a list or' +
                                 ' numpy arrays.')
             if not all(isinstance(val, supportedTypes) for val in value):
-                raise TypeError('All values in the data dictionary must be' + 
+                raise TypeError('All values in the data dictionary must be' +
                                 ' integers, floats, string or booleans.')
 
         # Saving column names
@@ -43,7 +43,7 @@ class DataFrame:
         return "Data:\n{0}\n Colnames: {1}.".format(self.data, self.colNames)
 
 
-    #Dictionary-style access to columns (`df["col_name"]`), which should return NumPy arrays in 
+    #Dictionary-style access to columns (`df["col_name"]`), which should return NumPy arrays in
     #all cases, and should allow modification (read and write)
 
     ## Read
@@ -66,3 +66,10 @@ class DataFrame:
             self.colNames = np.append(self.colNames, str(arg))
             self.data = np.column_stack((self.data, value))
             self.types.append(np.array(value).dtype.type)
+
+#Method .get_row(index) that returns a list of values corresponding to the row
+    #    Cover cases with multiple arguments (if needed?)
+    def get_row(self, index):
+        if(index not in range(self.data.shape[0])):
+            raise IndexError('Index {0} out of range.'.format(index))
+        return list(self.data[index])
