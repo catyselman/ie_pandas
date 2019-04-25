@@ -26,7 +26,7 @@ class DataFrame:
                                 ' integers, floats, string or booleans.')
 
         # Saving column names
-        self.colNames = np.array(list(valuesDictionary.keys()))
+        self.colNames = np.array(list(map(str, list(valuesDictionary.keys()))))
 
         valList = list(valuesDictionary.values())
 
