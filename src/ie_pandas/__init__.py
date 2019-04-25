@@ -73,3 +73,30 @@ class DataFrame:
         if(index not in range(self.data.shape[0])):
             raise IndexError('Index {0} out of range.'.format(index))
         return list(self.data[index])
+
+#Methods .sum(), .median(), .min() and .max() that, ignoring the
+#non-numerical columns, return a list of values corresponding to applying
+#the function to each numerical column
+
+    def aggFunction(self, function):
+        trans = np.transpose(self.data)
+        returnVal = []
+        for i in range(len(self.colNames)):
+            if(np.issubdtype(self.types[i], np.number)):
+                returnVal.append(function(trans[i]))
+        return returnVal
+
+    def sum(self):
+        return self.aggFunction(np.sum)
+
+    def median(self):
+        return self.aggFunction(np.median)
+
+    def max(self):
+        return self.aggFunction(np.max)
+
+    def min(self):
+        return self.aggFunction(np.min)
+
+    def mean(self):
+        return self.aggFunction(np.mean)
