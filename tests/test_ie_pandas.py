@@ -1,12 +1,11 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 
-import os
-import sys
+#import os
+#import sys
 import pytest
 import numpy as np
-sys.path.append(os.path.abspath('..'))
-from src.ie_pandas.ie_pandas import DataFrame
+from ie_pandas.ie_pandas import DataFrame
 
 
 def test_initialize_dataframe_errors():
