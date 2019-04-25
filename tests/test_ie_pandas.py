@@ -1,12 +1,11 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 
-import os
-import sys
+#import os
+#import sys
 import pytest
 import numpy as np
-sys.path.append(os.path.abspath('..'))
-from src.ie_pandas.ie_pandas import DataFrame
+from ie_pandas.ie_pandas import DataFrame
 
 
 def test_initialize_dataframe_errors():
@@ -55,3 +54,39 @@ def test_initiaze_dataframe_list(dictionary, dataSize, colSize):
     assert myDF.data.size == dataSize
     assert len(myDF.types) == colSize
     assert myDF.colNames.size == colSize
+
+def test_get_item_errors():
+    with pytest.raises(IndexError):
+        myDF = DataFrame(npDict1)
+        x = myDF['4']
+    
+    
+@pytest.mark.parametrize("dictionary, arg, expected", [
+    (npDict1, '2', [2, 3]),
+    (npDict2, '3', ['ff','dfdfa','dfdfb','cdfd']),
+	(listDict1, '2', [2, 3]),
+   	(listDict2, '3', ['ff','dfdfa','dfdfb','cdfd']),
+])
+
+def test_get_item(dictionary, arg, expected):
+    myDF =  DataFrame(dictionary)
+    
+    response = myDF[arg]
+    
+    assert isinstance(response, np.ndarray)
+    assert response.size == len(expected)
+    
+    for i in range(len(expected)):
+        assert response[i] == expected[i]
+       
+@pytest.mark.parametrize("dictionary, arg, value", [
+    (npDict1, '2', [2, 4]), ## Exiting col
+    (npDict2, '4', ['a','b','c','d']), ## Nonexiting col
+	(listDict1, '2', [2, 3]), ## Exiting col
+   	(listDict2, '5', ['a','b','c', 'd']), ## Nonexiting col
+])
+
+def test_set_item(dictionary, arg, value): 
+    myDF = DataFrame(dictionary)
+    myDF[arg] = value
+    np.testing.assert_array_equal(myDF[arg],np.array(value))

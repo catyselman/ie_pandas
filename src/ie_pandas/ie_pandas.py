@@ -26,7 +26,7 @@ class DataFrame:
                                 ' integers, floats, string or booleans.')
 
         # Saving column names
-        self.colNames = np.array(list(valuesDictionary.keys()))
+        self.colNames = np.array(list(map(str, list(valuesDictionary.keys()))))
 
         valList = list(valuesDictionary.values())
 
@@ -41,3 +41,28 @@ class DataFrame:
 
     def __repr__(self):
         return "Data:\n{0}\n Colnames: {1}.".format(self.data, self.colNames)
+
+
+    #Dictionary-style access to columns (`df["col_name"]`), which should return NumPy arrays in 
+    #all cases, and should allow modification (read and write)
+
+    ## Read
+        ## Check return val
+        ## Cover cases with multiple arguments (if needed?)
+    def _getitem_(self, arg):
+        try:
+            colIndex = np.where(self.colNames==arg)[0][0]
+        except:
+            raise IndexError("Column '{0}' does not exist in DataFrame.".format(arg))
+        return self.data[:, colIndex]
+
+    ## Write
+    def _setitem_(self, arg, value):
+        if(arg in self.colNames):
+            colIndex = np.where(self.colNames==arg)[0][0]
+            self.data[:, colIndex] = value
+            self.types[colIndex] = np.array(value).dtype.type
+        else:
+            self.colNames = np.append(self.colNames, str(arg))
+            self.data = np.column_stack((self.data, value))
+            self.types.append(np.array(value).dtype.type)
