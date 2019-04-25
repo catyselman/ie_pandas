@@ -49,7 +49,7 @@ class DataFrame:
     ## Read
         ## Check return val
         ## Cover cases with multiple arguments (if needed?)
-    def _getitem_(self, arg):
+    def __getitem__(self, arg):
         try:
             colIndex = np.where(self.colNames==arg)[0][0]
         except:
@@ -57,7 +57,7 @@ class DataFrame:
         return self.data[:, colIndex]
 
     ## Write
-    def _setitem_(self, arg, value):
+    def __setitem__(self, arg, value):
         if(arg in self.colNames):
             colIndex = np.where(self.colNames==arg)[0][0]
             self.data[:, colIndex] = value
