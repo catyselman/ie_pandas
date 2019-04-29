@@ -5,39 +5,43 @@ import numpy as np
 
 class DataFrame:
 
-
     def __init__(self, valuesDictionary):
+        
+        #  Support for int, float, and bool, string (non-numerical) columns
+        self.supportedTypes = (int, float, str, bool, np.int_, np.float_, np.str_, np.bool_)
 
         # Creation from a dictionary of lists and dictionary of NumPy arrays
         if not isinstance(valuesDictionary, dict):
             raise TypeError('DataFrame must be initalized with a dictionary' +
                             ' of lists of Numpy arrays.')
+            
+        dictValues = list(valuesDictionary.values())   
+    
+        ## Check that all values of dictionary have same length (same #of rows)
+        if(len(dictValues) > 0):
+            n = len(dictValues[0])
+            if any(len(x) != n for x in dictValues):
+                raise TypeError('Dataframe cannot be initialized with inconsistent number of rows.')
 
-        #  Support for int, float, and bool, string (non-numerical) columns
-        supportedTypes = (int, float, str, bool, np.int_, np.float_,
-                          np.str_, np.bool_)
-
-        for value in list(valuesDictionary.values()):
+        for value in dictValues:
             if (not isinstance(value, np.ndarray)) and (not isinstance(value, list)):
                 raise TypeError('All values of dictionary must be a list or' +
                                 ' numpy arrays.')
-            if not all(isinstance(val, supportedTypes) for val in value):
+            if not all(isinstance(val, self.supportedTypes) for val in value):
                 raise TypeError('All values in the data dictionary must be' +
                                 ' integers, floats, string or booleans.')
 
         # Saving column names
         self.colNames = np.array(list(map(str, list(valuesDictionary.keys()))))
 
-        valList = list(valuesDictionary.values())
-
         # Check types and save as a variable
         self.types = []
-        for column in valList:
+        for column in dictValues:
             column = np.array(column)
             self.types.append(column.dtype.type)
 
         # Save data as a numpy array
-        self.data = np.transpose(np.array(valList, dtype='O'))
+        self.data = np.transpose(np.array(dictValues, dtype='O'))
 
     def __repr__(self):
         return "Data:\n{0}\n Colnames: {1}.".format(self.data, self.colNames)
@@ -58,6 +62,20 @@ class DataFrame:
 
     ## Write
     def __setitem__(self, arg, value):
+
+        if (not isinstance(value, np.ndarray)) and (not isinstance(value, list)):
+            raise TypeError('All values of dictionary must be a list or' +
+                             ' numpy arrays.')
+        
+        ## Check that all values of dictionary have same length (same #of rows)
+        n = len(np.transpose(self.data)[0])
+        if len(value) != n:
+            raise ValueError('Value assigned has inconsistent number of rows with dataframe.')
+            
+        if not all(isinstance(val, self.supportedTypes) for val in value):
+            raise TypeError('All values in the data dictionary must be' +
+                                ' integers, floats, string or booleans.')
+                
         if(arg in self.colNames):
             colIndex = np.where(self.colNames==arg)[0][0]
             self.data[:, colIndex] = value

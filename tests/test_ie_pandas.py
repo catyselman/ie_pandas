@@ -25,13 +25,14 @@ def test_initialize_dataframe_errors():
     with pytest.raises(TypeError):
         DataFrame({ '1': np.array([None,2,3,4])})
 
-    with pytest.raises(Exception):
+    with pytest.raises(TypeError):
         DataFrame({ '1': np.array([1,2,3,4]), '2': np.array([1,2,3])})
 
 
 @pytest.mark.parametrize("dictionary, dataSize, colSize", [
     (npDict1, 4, 2),
     (npDict2, 12, 3),
+    ({}, 0, 0)
 ])
 
 def test_initialize_dataframe_numpy(dictionary, dataSize, colSize):
@@ -77,6 +78,20 @@ def test_get_item(dictionary, arg, expected):
 
     for i in range(len(expected)):
         assert response[i] == expected[i]
+
+def test_set_item_errors():
+    with pytest.raises(TypeError):
+        myDF = DataFrame(npDict1)
+        myDF['4'] = [1,np.array([])]
+
+    with pytest.raises(ValueError):
+        myDF = DataFrame(npDict1)
+        myDF['4'] = [1,2,3]
+
+    with pytest.raises(TypeError):
+        myDF = DataFrame(npDict1)
+        myDF['4'] = 4
+
 
 @pytest.mark.parametrize("dictionary, arg, value", [
     (npDict1, '2', [2, 4]), ## Exiting col
@@ -142,8 +157,8 @@ def test_max(dictionary, expected):
 @pytest.mark.parametrize("dictionary, expected", [
     (npDict1, [1, 2]),
     (npDict2, [1, 2]),
-    (listDict1, [1, 2]),
-    (listDict2, [1, 2]),
+	(listDict1, [1, 2]),
+   	(listDict2, [1, 2]),
 ])
 
 def test_min(dictionary, expected):
