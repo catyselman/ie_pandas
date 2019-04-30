@@ -37,8 +37,7 @@ class DataFrame:
                 )
 
         for value in dictValues:
-            if (not isinstance(value, np.ndarray)) and
-            (not isinstance(value, list)):
+            if (not isinstance(value, np.ndarray)) and (not isinstance(value, list)):
                 raise TypeError(
                     "All values of dictionary must be a list or" +
                     " numpy arrays."
@@ -81,8 +80,7 @@ class DataFrame:
     # Write
     def __setitem__(self, arg, value):
 
-        if (not isinstance(value, np.ndarray)) and
-        (not isinstance(value, list)):
+        if (not isinstance(value, np.ndarray)) and (not isinstance(value, list)):
             raise TypeError(
                 "All values of dictionary must be a list or" + " numpy arrays."
             )
