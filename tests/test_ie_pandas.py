@@ -39,8 +39,12 @@ def test_initialize_dataframe_errors():
 
 
 @pytest.mark.parametrize(
-    "dictionary, dataSize, colSize", [(npDict1, 4, 2),
-                                      (npDict2, 12, 3), ({}, 0, 0)]
+    "dictionary, dataSize, colSize",
+    [
+          (npDict1, 4, 2),
+          (npDict2, 12, 3),
+          ({}, 0, 0),
+    ],
 )
 def test_initialize_dataframe_numpy(dictionary, dataSize, colSize):
 
@@ -168,8 +172,12 @@ def test_median(dictionary, expected):
 
 @pytest.mark.parametrize(
     "dictionary, expected",
-    [(npDict1, [2, 3]), (npDict2, [4, 5]),
-     (listDict1, [2, 3]), (listDict2, [4, 5])],
+    [
+         (npDict1, [2, 3]),
+         (npDict2, [4, 5]),
+         (listDict1, [2, 3]),
+         (listDict2, [4, 5])
+    ],
 )
 def test_max(dictionary, expected):
     myDF = DataFrame(dictionary)
@@ -178,8 +186,12 @@ def test_max(dictionary, expected):
 
 @pytest.mark.parametrize(
     "dictionary, expected",
-    [(npDict1, [1, 2]), (npDict2, [1, 2]),
-     (listDict1, [1, 2]), (listDict2, [1, 2])],
+    [
+         (npDict1, [1, 2]),
+         (npDict2, [1, 2]),
+         (listDict1, [1, 2]),
+         (listDict2, [1, 2])
+     ],
 )
 def test_min(dictionary, expected):
     myDF = DataFrame(dictionary)
@@ -215,7 +227,11 @@ def test_var(dictionary, expected):
 
 
 @pytest.mark.parametrize(
-    "dictionary, expected", [(npDict1, [0.5, 0.5]), (listDict1, [0.5, 0.5])]
+    "dictionary, expected",
+    [
+         (npDict1, [0.5, 0.5]),
+         (listDict1, [0.5, 0.5]),
+    ]
 )
 def test_std(dictionary, expected):
     myDF = DataFrame(dictionary)
@@ -224,8 +240,12 @@ def test_std(dictionary, expected):
 
 @pytest.mark.parametrize(
     "dictionary, expected",
-    [(npDict1, [0, 0]), (npDict2, [0, 0]),
-     (listDict1, [0, 0]), (listDict2, [0, 0])],
+    [
+         (npDict1, [0, 0]),
+         (npDict2, [0, 0]),
+         (listDict1, [0, 0]),
+         (listDict2, [0, 0]),
+    ],
 )
 def test_argmin(dictionary, expected):
     myDF = DataFrame(dictionary)
@@ -234,8 +254,12 @@ def test_argmin(dictionary, expected):
 
 @pytest.mark.parametrize(
     "dictionary, expected",
-    [(npDict1, [1, 1]), (npDict2, [3, 3]),
-     (listDict1, [1, 1]), (listDict2, [3, 3])],
+    [
+         (npDict1, [1, 1]),
+         (npDict2, [3, 3]),
+         (listDict1, [1, 1]),
+         (listDict2, [3, 3])
+    ],
 )
 def test_argmax(dictionary, expected):
     myDF = DataFrame(dictionary)

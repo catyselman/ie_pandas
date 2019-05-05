@@ -22,8 +22,8 @@ class DataFrame:
         # Creation from a dictionary of lists and dictionary of NumPy arrays
         if not isinstance(valuesDictionary, dict):
             raise TypeError(
-                "DF must be initalized with a dictionary"
-                + " of lists of Numpy arrays."
+                "DF must be initalized with a dictionary" +
+                " of lists of Numpy arrays."
             )
 
         dictValues = list(valuesDictionary.values())
@@ -37,15 +37,18 @@ class DataFrame:
                 )
 
         for value in dictValues:
-            if (not isinstance(value, np.ndarray)) and (not isinstance(value, list)):
+            if (
+                (not(isinstance(value, np.ndarray))) and
+                (not(isinstance(value, list)))
+            ):
                 raise TypeError(
                     "All values of dictionary must be a list or" +
                     " numpy arrays."
                 )
             if not all(isinstance(val, self.supportedTypes) for val in value):
                 raise TypeError(
-                    "All values in the data dictionary must be"
-                    + " integers, floats, string or booleans."
+                    "All values in the data dictionary must be" +
+                    " integers, floats, string or booleans."
                 )
 
         # Saving column names
@@ -73,29 +76,32 @@ class DataFrame:
     def __getitem__(self, arg):
         try:
             colIndex = np.where(self.colNames == arg)[0][0]
-        except:
+        except IndexError:
             raise IndexError("Column '{0}' doesn't exist in DF.".format(arg))
         return self.data[:, colIndex]
 
     # Write
     def __setitem__(self, arg, value):
 
-        if (not isinstance(value, np.ndarray)) and (not isinstance(value, list)):
+        if (
+                (not(isinstance(value, np.ndarray))) and
+                (not(isinstance(value, list)))
+        ):
             raise TypeError(
-                "All values of dictionary must be a list or" + " numpy arrays."
+                "All values of dictionary must be a list or numpy arrays."
             )
 
         # Check that all values of dictionary have same length (same #of rows)
         n = len(np.transpose(self.data)[0])
         if len(value) != n:
             raise ValueError(
-                "Value assigned has inconsistent number of rows with DF."
+                    "Value assigned has inconsistent number of rows with DF."
             )
 
         if not all(isinstance(val, self.supportedTypes) for val in value):
             raise TypeError(
-                "All values in the data dictionary must be"
-                + " integers, floats, string or booleans."
+                "All values in the data dictionary must be" +
+                " integers, floats, string or booleans."
             )
 
         if arg in self.colNames:
